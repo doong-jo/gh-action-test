@@ -35,7 +35,7 @@ jobs:
         uses: actions/checkout@v2
         with:
           fetch-depth: 0
-          ref: ${{ steps.extract-ref.outputs.result }}g
+          ref: ${{ steps.extract-ref.outputs.result }}
           persist-credentials: false
 
       - name: Print PR branch name
