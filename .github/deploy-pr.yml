@@ -1,0 +1,42 @@
+name: Deploy Staging Storybook
+
+on:
+  workflow_dispatch:
+    inputs:
+      pr_number:
+        description: 'Pull request number triggered'
+        required: false
+        default: ''
+
+jobs:
+  deploy:
+    runs-on: [self-hosted, default]
+    if: "!contains(github.event.head_commit.message, '[skip ci]')"
+    steps:
+      - name: Extract ref
+        uses: actions/github-script@v4
+        id: extract-ref
+        with:
+          script: |
+            const prNumber = '${{ github.event.inputs.pr_number }}'
+            return prNumber === '' ? context.ref : `refs/pull/${prNumber}/head`
+          result-encoding: string
+
+      - name: Extract branch name
+        id: extract-branch-name
+        with:
+          script: |
+            const branchName = '${{ github.event.inputs.pr_number }}'
+            return branchName === '' ? 'master' : `refs/pull/${prNumber}/branch_name`
+          result-encoding: string
+
+      - name: Checkout
+        uses: actions/checkout@v2
+        with:
+          fetch-depth: 0
+          ref: ${{ steps.extract-ref.outputs.result }}
+          persist-credentials: false
+
+      - name: Print PR branch name
+        run: |
+          echo '${{ steps.extract-branch-name.outputs.result }}'
