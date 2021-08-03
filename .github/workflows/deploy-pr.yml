@@ -28,7 +28,7 @@ jobs:
         with:
           script: |
             const branchName = '${{ github.event.inputs.pr_number }}'
-            return branchName === '' ? 'master' : `refs/pull/${prNumber}/branch_name`
+            return branchName === '' ? 'master' : `refs/pull/${{ steps.extract-ref.outputs.result }}/branch_name`
           result-encoding: string
 
       - name: Checkout
