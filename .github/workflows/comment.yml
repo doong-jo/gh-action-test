@@ -9,6 +9,7 @@ jobs:
   publish:
     if: github.event.issue.pull_request && startsWith(github.event.comment.body, '/publish')
     name: Publish With Target
+    runs-on: [default]
     steps:
       - name: Dispatch
         uses: actions/github-script@v4
@@ -28,6 +29,7 @@ jobs:
   deploy-storybook:
     if: github.event.issue.pull_request && startsWith(github.event.comment.body, '/deploy-storybook')
     name: Publish With Target
+    runs-on: [default]
     steps:
       - name: Dispatch
         uses: actions/github-script@v4
