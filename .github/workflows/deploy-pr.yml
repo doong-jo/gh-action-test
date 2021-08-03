@@ -23,6 +23,7 @@ jobs:
           result-encoding: string
 
       - name: Extract branch name
+        uses: actions/github-script@v4
         id: extract-branch-name
         with:
           script: |
